@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.hero {
+  background: linear-gradient(to right, #007bff, #00c6ff);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero button {
+  padding: 10px 20px;
+  background: white;
+  color: #007bff;
+  border: none;
+  cursor: pointer;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+}
+
+.card {
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  width: 200px;
+  text-align: center;
+}
+
+.card h3 {
+  margin-top: 0;
+}
