@@ -1,7 +1,6 @@
 const db = require('../config/db');
 const { uploadToCloudinary } = require('../config/cloudinary');
 
-// Get all products with search, filter, sort and pagination
 exports.getProducts = async (req, res) => {
   try {
     let { search, category_id, min_price, max_price, sort, page, limit } = req.query;
@@ -23,7 +22,6 @@ exports.getProducts = async (req, res) => {
     let queryParams = [];
     let countParams = [];
 
-    // Search filter
     if (search) {
       const searchWild = `%${search}%`;
       query += ` AND (p.name LIKE ? OR p.description LIKE ?)`;
@@ -32,7 +30,6 @@ exports.getProducts = async (req, res) => {
       countParams.push(searchWild, searchWild);
     }
 
-    // Category filter
     if (category_id) {
       query += ` AND p.category_id = ?`;
       countQuery += ` AND p.category_id = ?`;
@@ -40,7 +37,6 @@ exports.getProducts = async (req, res) => {
       countParams.push(category_id);
     }
 
-    // Price filters
     if (min_price) {
       query += ` AND p.price >= ?`;
       countQuery += ` AND p.price >= ?`;
@@ -54,7 +50,6 @@ exports.getProducts = async (req, res) => {
       countParams.push(max_price);
     }
 
-    // Sorting
     if (sort === 'price_asc') {
       query += ` ORDER BY p.price ASC`;
     } else if (sort === 'price_desc') {
@@ -67,7 +62,6 @@ exports.getProducts = async (req, res) => {
       query += ` ORDER BY p.id DESC`; // Newest first
     }
 
-    // Pagination
     query += ` LIMIT ? OFFSET ?`;
     queryParams.push(limit, offset);
 
@@ -90,7 +84,6 @@ exports.getProducts = async (req, res) => {
   }
 };
 
-// Get product details by ID (including all images & reviews)
 exports.getProductById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -111,11 +104,9 @@ exports.getProductById = async (req, res) => {
 
     const product = products[0];
 
-    // Fetch images
     const [images] = await db.query('SELECT * FROM product_images WHERE product_id = ?', [id]);
     product.images = images;
 
-    // Fetch reviews
     const [reviews] = await db.query(
       'SELECT r.*, u.username as reviewer_username FROM reviews r LEFT JOIN users u ON r.user_id = u.id WHERE r.product_id = ? ORDER BY r.created_at DESC',
       [id]
@@ -129,7 +120,6 @@ exports.getProductById = async (req, res) => {
   }
 };
 
-// Get all images for a specific product
 exports.getProductImages = async (req, res) => {
   try {
     const { id } = req.params;
@@ -141,7 +131,6 @@ exports.getProductImages = async (req, res) => {
   }
 };
 
-// Create a Product (Admin only)
 exports.createProduct = async (req, res) => {
   try {
     const { name, description, price, category_id, stock } = req.body;
@@ -157,7 +146,6 @@ exports.createProduct = async (req, res) => {
 
     const productId = result.insertId;
 
-    // Handle Uploaded Images
     if (req.files && req.files.length > 0) {
       for (let i = 0; i < req.files.length; i++) {
         const file = req.files[i];
@@ -169,7 +157,6 @@ exports.createProduct = async (req, res) => {
         );
       }
     } else {
-      // Seed default image if none uploaded
       await db.query(
         'INSERT INTO product_images (product_id, image_url, is_primary) VALUES (?, ?, TRUE)',
         [productId, 'https://picsum.photos/400/400?random=' + productId]
@@ -183,7 +170,6 @@ exports.createProduct = async (req, res) => {
   }
 };
 
-// Update a Product (Admin only)
 exports.updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -203,10 +189,7 @@ exports.updateProduct = async (req, res) => {
       [name, description || '', price, category_id || null, stock || 20, id]
     );
 
-    // Handle new uploaded images if any
     if (req.files && req.files.length > 0) {
-      // Optional: Clear old images if you want a complete reset, or just append. Let's append
-      // If user wants to reset, they can upload new ones. Let's delete previous images first
       await db.query('DELETE FROM product_images WHERE product_id = ?', [id]);
 
       for (let i = 0; i < req.files.length; i++) {
@@ -227,7 +210,6 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
-// Delete a Product (Admin only)
 exports.deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -237,7 +219,6 @@ exports.deleteProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    // Delete records. Foreign key cascades will handle reviews, product_images, cart_items, wishlist, order_items cascades or set null.
     await db.query('DELETE FROM products WHERE id = ?', [id]);
 
     res.json({ message: 'Product deleted successfully' });
@@ -247,7 +228,6 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
-// Like Product
 exports.likeProduct = async (req, res) => {
   try {
     const { id } = req.params;
@@ -259,3 +239,4 @@ exports.likeProduct = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+

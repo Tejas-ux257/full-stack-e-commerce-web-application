@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Get all notifications for logged in user
 exports.getNotifications = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -15,7 +14,6 @@ exports.getNotifications = async (req, res) => {
   }
 };
 
-// Mark single notification as read
 exports.markAsRead = async (req, res) => {
   try {
     const { id } = req.params;
@@ -33,7 +31,6 @@ exports.markAsRead = async (req, res) => {
   }
 };
 
-// Mark all as read
 exports.markAllAsRead = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -49,3 +46,4 @@ exports.markAllAsRead = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+

@@ -68,7 +68,6 @@ export default function ProductCard({ product, onNotification, inWishlist: initi
     }
   };
 
-  // Safe image path builder
   const getImageUrl = (imagePath) => {
     if (!imagePath) return 'https://picsum.photos/400/400?random=' + product.id;
     if (imagePath.startsWith('http')) return imagePath;
@@ -140,3 +139,4 @@ export default function ProductCard({ product, onNotification, inWishlist: initi
     </Link>
   );
 }
+

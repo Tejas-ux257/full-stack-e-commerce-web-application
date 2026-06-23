@@ -11,7 +11,6 @@ cloudinary.config({
 
 const uploadToCloudinary = async (filePath) => {
   try {
-    // Check if Cloudinary is configured
     if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
       const fileName = path.basename(filePath);
       return `/uploads/${fileName}`;
@@ -19,7 +18,6 @@ const uploadToCloudinary = async (filePath) => {
     const result = await cloudinary.uploader.upload(filePath, {
       folder: 'ecommerce_portfolio'
     });
-    // Remove local file after Cloudinary upload to save disk space
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }
@@ -32,3 +30,4 @@ const uploadToCloudinary = async (filePath) => {
 };
 
 module.exports = { uploadToCloudinary };
+

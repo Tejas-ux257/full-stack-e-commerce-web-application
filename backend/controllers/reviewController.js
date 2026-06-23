@@ -1,11 +1,9 @@
 const db = require('../config/db');
 
-// Add a product review
 exports.addReview = async (req, res) => {
   try {
     const { product_id, review, rating } = req.body;
     
-    // Auth support (check if token was verified, else set Guest)
     let userId = null;
     let reviewerName = 'Guest';
 
@@ -14,7 +12,6 @@ exports.addReview = async (req, res) => {
       reviewerName = req.user.username;
     }
 
-    // Validation
     if (!product_id || !review || !rating) {
       return res.status(400).json({ message: "All fields are required" });
     }
@@ -35,7 +32,6 @@ exports.addReview = async (req, res) => {
   }
 };
 
-// Get reviews for a product
 exports.getReviewsByProduct = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -55,3 +51,4 @@ exports.getReviewsByProduct = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+

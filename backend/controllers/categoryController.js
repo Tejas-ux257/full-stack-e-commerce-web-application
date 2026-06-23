@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Get all categories
 exports.getCategories = async (req, res) => {
   try {
     const [rows] = await db.query('SELECT * FROM categories ORDER BY name ASC');
@@ -11,7 +10,6 @@ exports.getCategories = async (req, res) => {
   }
 };
 
-// Create a category (Admin only)
 exports.createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
@@ -32,7 +30,6 @@ exports.createCategory = async (req, res) => {
   }
 };
 
-// Update a category (Admin only)
 exports.updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -55,7 +52,6 @@ exports.updateCategory = async (req, res) => {
   }
 };
 
-// Delete a category (Admin only)
 exports.deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
@@ -72,3 +68,4 @@ exports.deleteCategory = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+

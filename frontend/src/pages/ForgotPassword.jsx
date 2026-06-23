@@ -29,7 +29,6 @@ export default function ForgotPassword() {
       const res = await API.post('/auth/forgot-password', { email });
       setToast({ message: 'Reset token generated (mock email sent)', type: 'success' });
       
-      // Store mock token for user convenience in showcase environment
       setMockTokenAlert(res.data.token);
       setToken(res.data.token); // Prefill for them to see how it works!
       setStep(2);
@@ -183,3 +182,4 @@ export default function ForgotPassword() {
     </div>
   );
 }
+

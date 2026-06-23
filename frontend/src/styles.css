@@ -1,10 +1,8 @@
-/* Premium Glassmorphic E-Commerce Stylesheet */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   
-  /* Color Tokens */
   --bg-primary: #0a0c10;
   --bg-secondary: #121620;
   --bg-tertiary: #1a2030;
@@ -63,7 +61,6 @@ button, input, select, textarea {
   color: inherit;
 }
 
-/* Glassmorphic Container Utility */
 .glass-panel {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -80,7 +77,6 @@ button, input, select, textarea {
   min-height: 80vh;
 }
 
-/* Header & Navbar */
 header {
   position: sticky;
   top: 0;
@@ -202,7 +198,6 @@ header {
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
 }
 
-/* Hero Section */
 .hero {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -300,7 +295,6 @@ header {
   transform: rotate(0deg) scale(1.02);
 }
 
-/* Product Search & Catalog Page Layout */
 .catalog-layout {
   display: grid;
   grid-template-columns: 280px 1fr;
@@ -397,7 +391,6 @@ header {
   text-align: center;
 }
 
-/* Product Card Grid */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -552,7 +545,6 @@ header {
   color: var(--text-secondary);
 }
 
-/* Forms & Auth (Login / Register) */
 .auth-wrapper {
   max-width: 450px;
   margin: 60px auto;
@@ -626,7 +618,6 @@ header {
   text-decoration: underline;
 }
 
-/* Product Details Page */
 .details-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -746,7 +737,6 @@ header {
   font-weight: 600;
 }
 
-/* Reviews List & Write Component */
 .reviews-container {
   margin-top: 60px;
   border-top: 1px solid var(--glass-border);
@@ -820,7 +810,6 @@ header {
   color: var(--text-secondary);
 }
 
-/* Shopping Cart Page */
 .cart-layout {
   display: grid;
   grid-template-columns: 1.8fr 1fr;
@@ -889,7 +878,6 @@ header {
   margin-top: 16px;
 }
 
-/* Checkout Page */
 .checkout-layout {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
@@ -897,7 +885,6 @@ header {
   margin-top: 30px;
 }
 
-/* Admin Dashboard layout */
 .admin-layout {
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -938,7 +925,6 @@ header {
   gap: 30px;
 }
 
-/* Admin Dashboard Widgets */
 .admin-grid-5 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -968,7 +954,6 @@ header {
   letter-spacing: 0.05em;
 }
 
-/* Tables style */
 .table-wrapper {
   overflow-x: auto;
   margin-top: 15px;
@@ -999,7 +984,6 @@ tr:hover td {
   background: rgba(255, 255, 255, 0.02);
 }
 
-/* Badges for status */
 .badge-status {
   padding: 4px 10px;
   border-radius: 50px;
@@ -1015,7 +999,6 @@ tr:hover td {
 .badge-delivered { background: rgba(16, 185, 129, 0.15); color: var(--success); }
 .badge-cancelled { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
 
-/* Floating Toast notifications */
 .toast-alert {
   position: fixed;
   bottom: 24px;
@@ -1049,7 +1032,6 @@ tr:hover td {
   color: var(--text-secondary);
 }
 
-/* Analytics charts panel */
 .analytics-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1077,7 +1059,6 @@ tr:hover td {
   height: 100%;
 }
 
-/* Footer Section */
 footer {
   margin-top: 80px;
   background: #06080c;
@@ -1095,7 +1076,6 @@ footer {
   align-items: center;
 }
 
-/* Animations */
 @keyframes slideIn {
   from {
     transform: translateY(20px);
@@ -1116,7 +1096,6 @@ footer {
   animation: fadeIn 0.4s ease-in-out;
 }
 
-/* Pagination container */
 .pagination-row {
   display: flex;
   justify-content: center;
@@ -1144,7 +1123,6 @@ footer {
   border-color: transparent;
 }
 
-/* Modal styling */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -1183,7 +1161,6 @@ footer {
   cursor: pointer;
 }
 
-/* Mobile Responsiveness styling */
 @media(max-width: 992px) {
   .hero {
     grid-template-columns: 1fr;
@@ -1227,3 +1204,4 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+

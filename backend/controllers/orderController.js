@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Checkout cart to Order
 exports.checkout = async (req, res) => {
   const connection = await db.getConnection();
   try {
@@ -13,7 +12,6 @@ exports.checkout = async (req, res) => {
 
     await connection.beginTransaction();
 
-    // 1. Get cart items
     const [cart] = await connection.query('SELECT id FROM cart WHERE user_id = ?', [userId]);
     if (cart.length === 0) {
       await connection.rollback();
@@ -31,7 +29,6 @@ exports.checkout = async (req, res) => {
       return res.status(400).json({ message: 'Your cart is empty' });
     }
 
-    // 2. Validate stock
     let totalAmount = 0;
     for (const item of cartItems) {
       if (item.quantity > item.stock) {
@@ -41,31 +38,25 @@ exports.checkout = async (req, res) => {
       totalAmount += item.quantity * item.price;
     }
 
-    // 3. Create Order
     const [orderResult] = await connection.query(
       'INSERT INTO orders (user_id, total_amount, status, shipping_address, payment_method) VALUES (?, ?, ?, ?, ?)',
       [userId, totalAmount, 'Pending', shipping_address, payment_method || 'Cash on Delivery']
     );
     const orderId = orderResult.insertId;
 
-    // 4. Create Order Items & Update stock
     for (const item of cartItems) {
-      // Insert item
       await connection.query(
         'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)',
         [orderId, item.product_id, item.quantity, item.price]
       );
-      // Deduct stock
       await connection.query(
         'UPDATE products SET stock = stock - ? WHERE id = ?',
         [item.quantity, item.product_id]
       );
     }
 
-    // 5. Clear cart
     await connection.query('DELETE FROM cart_items WHERE cart_id = ?', [cartId]);
 
-    // 6. Create Notification
     await connection.query(
       'INSERT INTO notifications (user_id, message) VALUES (?, ?)',
       [userId, `Your order #${orderId} for ₹${totalAmount.toFixed(2)} has been placed successfully!`]
@@ -82,7 +73,6 @@ exports.checkout = async (req, res) => {
   }
 };
 
-// Get logged in user's orders
 exports.getMyOrders = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -95,7 +85,6 @@ exports.getMyOrders = async (req, res) => {
   }
 };
 
-// Get single order details (items included)
 exports.getOrderById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -109,7 +98,6 @@ exports.getOrderById = async (req, res) => {
 
     const order = orders[0];
 
-    // Access control: User can only see their own orders unless Admin
     if (order.user_id !== userId && userRole !== 'admin') {
       return res.status(403).json({ message: 'Access denied' });
     }
@@ -131,7 +119,6 @@ exports.getOrderById = async (req, res) => {
   }
 };
 
-// Get all orders (Admin only)
 exports.getAllOrders = async (req, res) => {
   try {
     const [orders] = await db.query(
@@ -147,7 +134,6 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-// Update order status (Admin only)
 exports.updateOrderStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -164,7 +150,6 @@ exports.updateOrderStatus = async (req, res) => {
 
     await db.query('UPDATE orders SET status = ? WHERE id = ?', [status, id]);
 
-    // Create Notification for user
     await db.query(
       'INSERT INTO notifications (user_id, message) VALUES (?, ?)',
       [orders[0].user_id, `Your order #${id} status has been updated to: ${status}.`]
@@ -176,3 +161,4 @@ exports.updateOrderStatus = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+

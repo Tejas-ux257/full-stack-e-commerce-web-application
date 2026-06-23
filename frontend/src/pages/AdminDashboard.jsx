@@ -13,18 +13,15 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
 
-  // Data states
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [orders, setOrders] = useState([]);
   const [contacts, setContacts] = useState([]);
 
-  // Modal states
   const [showProductModal, setShowProductModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null); // null = creating
   const [showCategoryModal, setShowCategoryModal] = useState(false);
 
-  // Form states - Products
   const [productForm, setProductForm] = useState({
     name: '',
     description: '',
@@ -34,7 +31,6 @@ export default function AdminDashboard() {
   });
   const [selectedImages, setSelectedImages] = useState([]);
 
-  // Form states - Categories
   const [categoryForm, setCategoryForm] = useState({
     name: '',
     description: ''
@@ -75,7 +71,6 @@ export default function AdminDashboard() {
     }
   };
 
-  // --- Category CRUD Actions ---
   const handleCategorySubmit = async (e) => {
     e.preventDefault();
     if (!categoryForm.name) return;
@@ -103,7 +98,6 @@ export default function AdminDashboard() {
     }
   };
 
-  // --- Product CRUD Actions ---
   const openProductCreate = () => {
     setEditingProduct(null);
     setProductForm({ name: '', description: '', price: '', category_id: '', stock: '20' });
@@ -174,7 +168,6 @@ export default function AdminDashboard() {
     }
   };
 
-  // --- Order Status Actions ---
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       await API.put(`/orders/status/${orderId}`, { status: newStatus });
@@ -543,3 +536,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

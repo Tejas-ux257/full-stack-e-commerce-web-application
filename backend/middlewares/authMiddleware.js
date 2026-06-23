@@ -44,7 +44,6 @@ exports.optionalProtect = async (req, res, next) => {
         req.user = users[0];
       }
     } catch (error) {
-      // Ignore token failure for optional protect, fallback to guest
     }
   }
   next();
@@ -57,3 +56,4 @@ exports.adminOnly = (req, res, next) => {
     res.status(403).json({ message: 'Not authorized as an admin' });
   }
 };
+

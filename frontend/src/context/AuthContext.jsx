@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [wishlistCount, setWishlistCount] = useState(0);
 
-  // Configure Axios default header
   useEffect(() => {
     if (token) {
       localStorage.setItem('token', token);
@@ -99,3 +98,4 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+

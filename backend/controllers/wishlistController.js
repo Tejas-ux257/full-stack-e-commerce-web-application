@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Get wishlist items
 exports.getWishlist = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -21,7 +20,6 @@ exports.getWishlist = async (req, res) => {
   }
 };
 
-// Add to wishlist
 exports.addToWishlist = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -36,7 +34,6 @@ exports.addToWishlist = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    // Check duplicate
     const [existing] = await db.query(
       'SELECT id FROM wishlist WHERE user_id = ? AND product_id = ?',
       [userId, product_id]
@@ -53,7 +50,6 @@ exports.addToWishlist = async (req, res) => {
   }
 };
 
-// Remove from wishlist
 exports.removeFromWishlist = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -67,3 +63,4 @@ exports.removeFromWishlist = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+

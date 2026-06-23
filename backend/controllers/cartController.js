@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Helper to get or create cart ID for a user
 const getOrCreateCartId = async (userId) => {
   const [carts] = await db.query('SELECT id FROM cart WHERE user_id = ?', [userId]);
   if (carts.length > 0) {
@@ -10,7 +9,6 @@ const getOrCreateCartId = async (userId) => {
   return result.insertId;
 };
 
-// Get cart items
 exports.getCart = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -32,7 +30,6 @@ exports.getCart = async (req, res) => {
   }
 };
 
-// Add item to cart
 exports.addToCart = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -51,7 +48,6 @@ exports.addToCart = async (req, res) => {
 
     const cartId = await getOrCreateCartId(userId);
 
-    // Check if item already in cart
     const [existing] = await db.query(
       'SELECT id, quantity FROM cart_items WHERE cart_id = ? AND product_id = ?',
       [cartId, product_id]
@@ -83,7 +79,6 @@ exports.addToCart = async (req, res) => {
   }
 };
 
-// Update cart item quantity
 exports.updateCartQuantity = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -117,7 +112,6 @@ exports.updateCartQuantity = async (req, res) => {
   }
 };
 
-// Remove item from cart
 exports.removeFromCart = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -134,7 +128,6 @@ exports.removeFromCart = async (req, res) => {
   }
 };
 
-// Clear cart
 exports.clearCart = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -148,3 +141,4 @@ exports.clearCart = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+

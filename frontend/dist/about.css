@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.about {
+  padding: 40px;
+  background: #f0f0f0;
+  text-align: center;
+}
+
+.team {
+  padding: 40px;
+}
+
+.team-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.member {
+  text-align: center;
+}
+
+.member img {
+  border-radius: 50%;
+}

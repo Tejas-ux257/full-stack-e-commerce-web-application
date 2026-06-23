@@ -55,7 +55,6 @@ export default function Checkout() {
       updateCounts(); // Clear cart counters
       setToast({ message: 'Order placed successfully!', type: 'success' });
       
-      // Delay redirection to let user see success toast
       setTimeout(() => {
         navigate('/orders');
       }, 1500);
@@ -189,3 +188,4 @@ export default function Checkout() {
     </div>
   );
 }
+

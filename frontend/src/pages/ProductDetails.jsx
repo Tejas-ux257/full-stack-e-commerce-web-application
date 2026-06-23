@@ -17,7 +17,6 @@ export default function ProductDetails() {
   const [isLiking, setIsLiking] = useState(false);
   const [likes, setLikes] = useState(0);
 
-  // Review Form state
   const [ratingInput, setRatingInput] = useState(5);
   const [reviewInput, setReviewInput] = useState('');
   const [reviewLoading, setReviewLoading] = useState(false);
@@ -35,7 +34,6 @@ export default function ProductDetails() {
       setProduct(res.data);
       setLikes(res.data.likes);
       
-      // Set primary image first
       if (res.data.images && res.data.images.length > 0) {
         const primary = res.data.images.find(img => img.is_primary) || res.data.images[0];
         setActiveImage(primary.image_url);
@@ -321,3 +319,4 @@ export default function ProductDetails() {
     </div>
   );
 }
+

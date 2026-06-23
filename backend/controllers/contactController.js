@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Save contact form submission (Public)
 exports.addContact = async (req, res) => {
   try {
     const { name, email, message } = req.body;
@@ -21,7 +20,6 @@ exports.addContact = async (req, res) => {
   }
 };
 
-// Retrieve all messages (Admin only)
 exports.getContacts = async (req, res) => {
   try {
     const [rows] = await db.query('SELECT * FROM contacts ORDER BY created_at DESC');
@@ -31,3 +29,4 @@ exports.getContacts = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+

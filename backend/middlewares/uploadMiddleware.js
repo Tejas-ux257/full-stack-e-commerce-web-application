@@ -2,13 +2,11 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
-// Ensure upload directory exists
 const uploadDir = path.join(__dirname, '../public/uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Storage config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadDir);
@@ -19,7 +17,6 @@ const storage = multer.diskStorage({
   }
 });
 
-// File filter
 const fileFilter = (req, file, cb) => {
   const fileTypes = /jpeg|jpg|png|webp|gif/;
   const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
@@ -39,3 +36,4 @@ const upload = multer({
 });
 
 module.exports = upload;
+

@@ -19,7 +19,6 @@ import ForgotPassword from './pages/ForgotPassword';
 import AdminDashboard from './pages/AdminDashboard';
 import AnalyticsDashboard from './pages/AnalyticsDashboard';
 
-// Protected Route wrapper component
 function ProtectedRoute({ children, adminOnly = false }) {
   const { user, loading } = useAuth();
 
@@ -125,3 +124,4 @@ export default function App() {
     </AuthProvider>
   );
 }
+

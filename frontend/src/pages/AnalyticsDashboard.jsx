@@ -18,7 +18,6 @@ import {
 } from 'chart.js';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 
-// Register ChartJS plugins
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -66,7 +65,6 @@ export default function AnalyticsDashboard() {
     }
   };
 
-  // Helper chart configurations
   const getLineChartData = () => {
     const data = analytics?.revenueTimeline || [];
     const labels = data.length > 0 ? data.map(d => d.month) : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
@@ -237,3 +235,4 @@ export default function AnalyticsDashboard() {
     </div>
   );
 }
+

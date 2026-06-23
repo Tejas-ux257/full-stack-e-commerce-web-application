@@ -10,7 +10,6 @@ export default function Products() {
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState(null);
 
-  // Filters State
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [minPrice, setMinPrice] = useState('');
@@ -26,7 +25,6 @@ export default function Products() {
   }, []);
 
   useEffect(() => {
-    // Debounce product fetching when filters change
     const timer = setTimeout(() => {
       fetchProducts();
     }, 300);
@@ -48,7 +46,6 @@ export default function Products() {
       const ids = new Set(res.data.map(item => item.id));
       setWishlistIds(ids);
     } catch (err) {
-      // User might be a guest
       console.log('Guest user, skipping wishlist checks');
     }
   };
@@ -241,3 +238,4 @@ export default function Products() {
     </div>
   );
 }
+

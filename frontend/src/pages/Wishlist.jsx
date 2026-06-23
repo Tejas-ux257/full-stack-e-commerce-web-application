@@ -36,7 +36,6 @@ export default function Wishlist() {
 
   const triggerToast = (toastObj) => {
     setToast(toastObj);
-    // Reload items if an item was removed (since ProductCard handles remove directly)
     if (toastObj.message === 'Removed from wishlist') {
       fetchWishlistItems();
     }
@@ -88,3 +87,4 @@ export default function Wishlist() {
     </div>
   );
 }
+

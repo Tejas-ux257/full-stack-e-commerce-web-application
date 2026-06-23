@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-// Admin Dashboard Summary Stats
 exports.getAdminStats = async (req, res) => {
   try {
     const [[{ users_count }]] = await db.query('SELECT COUNT(*) as users_count FROM users');
@@ -12,7 +11,6 @@ exports.getAdminStats = async (req, res) => {
       "SELECT COALESCE(SUM(total_amount), 0) as total_revenue FROM orders WHERE status != 'Cancelled'"
     );
 
-    // Latest 5 orders
     const [latestOrders] = await db.query(
       `SELECT o.*, u.username as customer_name
        FROM orders o
@@ -21,7 +19,6 @@ exports.getAdminStats = async (req, res) => {
        LIMIT 5`
     );
 
-    // Latest 5 reviews
     const [latestReviews] = await db.query(
       `SELECT r.*, p.name as product_name
        FROM reviews r
@@ -47,10 +44,8 @@ exports.getAdminStats = async (req, res) => {
   }
 };
 
-// Analytics Data for Chart.js
 exports.getAnalyticsStats = async (req, res) => {
   try {
-    // 1. Revenue over time (Last 6 Months)
     const [revenueTimeline] = await db.query(
       `SELECT DATE_FORMAT(created_at, '%b %Y') as month, SUM(total_amount) as revenue
        FROM orders
@@ -60,7 +55,6 @@ exports.getAnalyticsStats = async (req, res) => {
        LIMIT 6`
     );
 
-    // 2. Category distribution (Products per Category)
     const [categoryDistribution] = await db.query(
       `SELECT c.name as category, COUNT(p.id) as count
        FROM categories c
@@ -68,7 +62,6 @@ exports.getAnalyticsStats = async (req, res) => {
        GROUP BY c.id, c.name`
     );
 
-    // 3. Top 5 selling products
     const [topSelling] = await db.query(
       `SELECT p.name as product, SUM(oi.quantity) as sales_count
        FROM order_items oi
@@ -78,7 +71,6 @@ exports.getAnalyticsStats = async (req, res) => {
        LIMIT 5`
     );
 
-    // 4. Top 5 highest rated products
     const [highestRated] = await db.query(
       `SELECT p.name as product, AVG(r.rating) as average_rating
        FROM reviews r
@@ -99,3 +91,4 @@ exports.getAnalyticsStats = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
