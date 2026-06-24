@@ -66,5 +66,6 @@ POST   /api/contacts
 - Add new API routes in backend/routes
 - Add new DB tables in schema.sql
 
-live demo - https://full-stack-e-commerce-web-applicati-liart.vercel.app/
+live demo -Live Demo: https://full-stack-e-commerce-web-applicati-liart.vercel.app
+
 
