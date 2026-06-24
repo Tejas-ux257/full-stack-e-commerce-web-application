@@ -1,0 +1,1 @@
+import{r as c,j as s}from"./index-BVI1jXbs.js";function i({message:e,type:r="success",onClose:t}){return c.useEffect(()=>{const a=setTimeout(()=>{t()},3e3);return()=>clearTimeout(a)},[t]),s.jsxs("div",{className:`toast-alert toast-${r}`,children:[s.jsx("span",{children:e}),s.jsx("button",{className:"toast-close",onClick:t,children:"×"})]})}export{i as T};

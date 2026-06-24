@@ -150,6 +150,14 @@ header {
 .auth-actions {
   display: flex;
   gap: 10px;
+  align-items: center;
+}
+
+.auth-actions .btn-outline,
+.auth-actions .btn-login {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .page-loading {
@@ -1245,10 +1253,18 @@ footer {
     margin-left: auto;
   }
   .auth-actions {
-    display: none;
+    display: flex;
+    gap: 6px;
+    margin-left: 6px;
+  }
+
+  .auth-actions .btn-outline,
+  .auth-actions .btn-login {
+    padding: 7px 10px;
+    font-size: 0.8rem;
   }
   .user-profile-nav {
-    display: none;
+    display: flex;
   }
   .product-grid {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));

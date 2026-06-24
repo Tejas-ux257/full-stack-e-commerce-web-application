@@ -24,6 +24,12 @@ export default function Navbar() {
   }, []);
 
   const isActive = (path) => location.pathname === path;
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  const authAction = location.pathname === '/login'
+    ? { label: 'Register', to: '/register', className: 'btn-login' }
+    : location.pathname === '/register'
+      ? { label: 'Login', to: '/login', className: 'btn-outline' }
+      : null;
 
   const toggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
@@ -121,12 +127,20 @@ export default function Navbar() {
             </>
           ) : (
             <div className="auth-actions">
-              <Link to="/login" className="btn-outline" onClick={() => setMenuOpen(false)}>
-                Login
-              </Link>
-              <Link to="/register" className="btn-login" onClick={() => setMenuOpen(false)}>
-                Register
-              </Link>
+              {authAction ? (
+                <Link to={authAction.to} className={authAction.className} onClick={() => setMenuOpen(false)}>
+                  {authAction.label}
+                </Link>
+              ) : (
+                <>
+                  <Link to="/login" className="btn-outline" onClick={() => setMenuOpen(false)}>
+                    Login
+                  </Link>
+                  <Link to="/register" className="btn-login" onClick={() => setMenuOpen(false)}>
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           )}
 
