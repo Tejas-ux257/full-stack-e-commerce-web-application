@@ -38,6 +38,20 @@
   padding: 0;
 }
 
+:root[data-theme='light'] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #eef2ff;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(15, 23, 42, 0.08);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.16);
+}
+
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
@@ -87,6 +101,10 @@ header {
   border-bottom: 1px solid var(--glass-border);
 }
 
+:root[data-theme='light'] header {
+  background: rgba(255, 255, 255, 0.8);
+}
+
 .nav-container {
   max-width: 1300px;
   margin: 0 auto;
@@ -113,6 +131,33 @@ header {
   gap: 28px;
   align-items: center;
   list-style: none;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.user-profile-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.page-loading {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
 }
 
 .nav-item {
@@ -1169,6 +1214,52 @@ footer {
   .hero-content p {
     margin-left: auto;
     margin-right: auto;
+  }
+  .nav-container {
+    padding: 0 16px;
+    height: 68px;
+    flex-wrap: wrap;
+  }
+  .nav-links {
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--bg-secondary);
+    padding: 16px 20px 24px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .mobile-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-actions {
+    gap: 10px;
+    margin-left: auto;
+  }
+  .auth-actions {
+    display: none;
+  }
+  .user-profile-nav {
+    display: none;
+  }
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  .details-actions {
+    flex-wrap: wrap;
+  }
+  .toast-alert {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
   }
   .hero-buttons {
     justify-content: center;

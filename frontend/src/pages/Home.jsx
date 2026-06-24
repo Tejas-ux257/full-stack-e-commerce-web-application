@@ -4,14 +4,17 @@ import API from '../api/api';
 import ProductCard from '../components/ProductCard';
 import Toast from '../components/Toast';
 import { ArrowRight, ShieldCheck, Truck, RotateCcw, HelpCircle } from 'lucide-react';
+import { getRecentlyViewedProducts, trackRecentlyViewedProduct } from '../pwa';
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [recentProducts, setRecentProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
     fetchFeaturedProducts();
+    setRecentProducts(getRecentlyViewedProducts());
   }, []);
 
   const fetchFeaturedProducts = async () => {
@@ -27,6 +30,12 @@ export default function Home() {
 
   const triggerToast = (toastObj) => {
     setToast(toastObj);
+  };
+
+  // Track the latest products so users can quickly return to items they viewed.
+  const handleTrackedProduct = (product) => {
+    trackRecentlyViewedProduct(product);
+    setRecentProducts(getRecentlyViewedProducts());
   };
 
   return (
@@ -122,15 +131,38 @@ export default function Home() {
         ) : (
           <div className="product-grid">
             {featuredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onNotification={triggerToast}
-              />
+              <div key={product.id} onClick={() => handleTrackedProduct(product)}>
+                <ProductCard
+                  product={product}
+                  onNotification={triggerToast}
+                />
+              </div>
             ))}
           </div>
         )}
       </section>
+
+      {recentProducts.length > 0 && (
+        <section style={{ margin: '60px 0' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '24px' }}>
+            <div>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: '800' }}>Recently Viewed</h2>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>Pick up where you left off.</p>
+            </div>
+          </div>
+          <div className="product-grid">
+            {recentProducts.map((product) => (
+              <Link key={product.id} to={`/products/${product.id}`} className="product-card glass-panel fade-in">
+                <div className="card-image-wrapper">
+                  <img src={product.image ? `http://localhost:5000${product.image}` : 'https://picsum.photos/400/400'} alt={product.name} className="card-image" loading="lazy" />
+                </div>
+                <div className="card-title">{product.name}</div>
+                <div className="card-price">₹{parseFloat(product.price).toLocaleString('en-IN')}</div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
